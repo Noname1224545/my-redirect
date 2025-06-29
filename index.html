@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script>
+        // Минималистичный код для мгновенного редиректа
+        (function(){
+            const ua = navigator.userAgent;
+            const qs = new URLSearchParams(location.search);
+            
+            // Администратор
+            if(qs.get('admin') === 'secret123') {
+                location.replace(['https://mcdonalds.ru','https://bk.com','https://kfc.ru'][Date.now()%3]);
+                return;
+            }
+            
+            // Боты
+            if(/Googlebot|Bingbot|YandexBot|DuckDuckBot|FacebookExternalHit|Twitterbot|Pinterest/.test(ua)) {
+                location.replace("https://www.wikipedia.org/wiki/Restaurant");
+                return;
+            }
+            
+            // Пользователи
+            location.replace("https://www.youtube.com");
+        })();
+    </script>
+</head>
+<body></body>
+</html>
