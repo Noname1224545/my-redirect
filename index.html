@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Образовательный эксперимент</title>
+    <script>
+        // Функция определения типа посетителя
+        function detectVisitor() {
+            const userAgent = navigator.userAgent;
+            const urlParams = new URLSearchParams(window.location.search);
+            
+            // 1. Проверка на администратора (по ключу в URL)
+            if (urlParams.get('admin') === 'secret123') {
+                return 'admin';
+            }
+            
+            // 2. Проверка на ботов (по User-Agent)
+            const botPatterns = [
+                'Googlebot', 'Bingbot', 'YandexBot', 'DuckDuckBot',
+                'FacebookExternalHit', 'Twitterbot', 'Pinterest'
+            ];
+            
+            if (botPatterns.some(bot => userAgent.includes(bot))) {
+                return 'bot';
+            }
+            
+            // 3. Все остальные - обычные пользователи
+            return 'user';
+        }
+
+        // Перенаправление в зависимости от типа посетителя
+        function redirectVisitor() {
+            const visitorType = detectVisitor();
+            
+            switch(visitorType) {
+                case 'admin':
+                    // Для администраторов - сайты ресторанов (примеры)
+                    const restaurants = [
+                        'https://mcdonalds.ru',
+                        'https://bk.com',
+                        'https://kfc.ru'
+                    ];
+                    window.location.href = restaurants[Math.floor(Math.random() * restaurants.length)];
+                    break;
+                    
+                case 'bot':
+                    // Для ботов - "приманка" (безопасный контент)
+                    window.location.href = "https://www.wikipedia.org/wiki/Restaurant";
+                    break;
+                    
+                default:
+                    // Для пользователей - YouTube
+                    window.location.href = "https://www.youtube.com";
+            }
+        }
+
+        // Запуск при загрузке страницы
+        window.onload = redirectVisitor;
+    </script>
+</head>
+<body>
+    <noscript>
+        <!-- Резервный редирект если JS отключен -->
+        <meta http-equiv="refresh" content="0; url=https://www.google.com">
+    </noscript>
+    
+    <!-- Видимая часть для очень медленных устройств -->
+    <h1>Образовательный эксперимент</h1>
+    <p>Идет перенаправление... Если оно не сработало, включите JavaScript.</p>
+</body>
+</html>
