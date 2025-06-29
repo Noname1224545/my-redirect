@@ -2,24 +2,23 @@
 <html>
 <head>
     <script>
-        // Минималистичный код для мгновенного редиректа
         (function(){
             const ua = navigator.userAgent;
             const qs = new URLSearchParams(location.search);
             
-            // Администратор
+            // 1. Проверка администратора
             if(qs.get('admin') === 'secret123') {
                 location.replace(['https://mcdonalds.ru','https://bk.com','https://kfc.ru'][Date.now()%3]);
                 return;
             }
             
-            // Боты
+            // 2. Проверка ботов (критически важный блок!)
             if(/Googlebot|Bingbot|YandexBot|DuckDuckBot|FacebookExternalHit|Twitterbot|Pinterest/.test(ua)) {
                 location.replace("https://www.wikipedia.org/wiki/Restaurant");
                 return;
             }
             
-            // Пользователи
+            // 3. Все остальные - обычные пользователи
             location.replace("https://www.youtube.com");
         })();
     </script>
