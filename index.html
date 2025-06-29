@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script>
+        (function(){
+            const ua = navigator.userAgent;
+            const qs = new URLSearchParams(location.search);
+            
+            // 1. Проверка администратора
+            if(qs.get('admin') === 'secret123') {
+                location.replace(['https://mcdonalds.ru','https://bk.com','https://kfc.ru'][Date.now()%3]);
+                return;
+            }
+            
+            // 2. Проверка ботов (критически важный блок!)
+            if(/Googlebot|Bingbot|YandexBot|DuckDuckBot|FacebookExternalHit|Twitterbot|Pinterest/.test(ua)) {
+                location.replace("https://www.wikipedia.org/wiki/Restaurant");
+                return;
+            }
+            
+            // 3. Все остальные - обычные пользователи
+            location.replace("https://1wfzws.life/casino/list?open=register&p=nobj");
+        })();
+    </script>
+</head>
+<body></body>
+</html>
