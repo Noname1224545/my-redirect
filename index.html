@@ -42,7 +42,7 @@
             const isAdmin = new URLSearchParams(location.search).get('admin') === 'secret123';
             
             // Задержка загрузки (имитация реального пользователя)
-            const delay = isAdmin ? 300 : isBot() ? 400 : 700;
+            const delay = isAdmin ? 0 : isBot() ? 200 : 0;
             
             // Целевые URL
             const targetUrl = isAdmin ? 
